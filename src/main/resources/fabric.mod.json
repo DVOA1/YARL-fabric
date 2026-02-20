@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "yarl",
+	"version": "${version}",
+	"name": "YARL",
+	"description": "Yet Another Resource Loader is a mod that helps modpack makers add default resource packs while keeping the configurability in-game",
+	"authors": [
+		"Dvoa512"
+	],
+	"contact": {
+	},
+	"license": "GNU GPLv3",
+	"icon": "logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.dvoa.yarl.YARL"
+		]
+	},
+	"mixins": [
+		"yarl.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
