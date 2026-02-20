@@ -1,6 +1,7 @@
 plugins {
 	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id 'maven-publish'
+	id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 version = project.mod_version
@@ -18,7 +19,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	implementation "com.electronwill.night-config:toml:3.6.7"
+	implementation 'com.moandjiezana.toml:toml4j:0.7.2'
 }
 
 processResources {
@@ -43,7 +44,15 @@ java {
 	targetCompatibility = JavaVersion.VERSION_21
 }
 
+shadowJar {
+	relocate 'com.moandjiezana.toml', 'dev.dvoa.yarl.shadow.toml'
+}
+
 jar {
+	dependsOn shadowJar
+	from(shadowJar.archiveFile) {
+		into '.'
+	}
 	inputs.property "archivesName", project.base.archivesName
 
 	from("LICENSE") {
@@ -51,7 +60,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
